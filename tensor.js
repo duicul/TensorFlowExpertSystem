@@ -19,7 +19,7 @@ function generate_data(max,x,y,z){ //x,y,z -> proportion for each category
 		actual_val.push(point);
 		//[point.x/resolution1,point.y/resolution2]);
 		var val=0;
-		if(point.r>200&&point.r<250&&point.g>70&&point.g<100&&point.b>20&&point.b<50&&point.p>5&&point.p<12)//flower color and petal number
+		if(point.r>80&&point.r<150&&point.g>70&&point.g<100&&point.b>20&&point.b<50&&point.p>5&&point.p<12)//flower color and petal number
 		{val = [1,0];
 		//console.log(val);
 		}
@@ -30,7 +30,7 @@ function generate_data(max,x,y,z){ //x,y,z -> proportion for each category
 		else val=[0,0];
 		adjust_output.push(val);}
 	for(var i=0;i<max*y;i++){
-		var point={r:Math.random()*50+200,g:Math.random()*30+70,b:Math.random()*30+20,p:Math.random()*7+5};
+		var point={r:Math.random()*70+80,g:Math.random()*30+70,b:Math.random()*30+20,p:Math.random()*7+5};
 		adjust_points.push([Math.trunc(point.r/100)/3,Math.trunc(point.r/10%10)/10,Math.trunc(point.r%10)/10,Math.trunc(point.g/100)/3,Math.trunc(point.g/10%10)/10,Math.trunc(point.g%10)/10,Math.trunc(point.b/100)/3,Math.trunc(point.b/10%10)/10,Math.trunc(point.b%10)/10,point.p/resolution]);
 		actual_val.push(point);
 		adjust_output.push([1,0]);
@@ -91,13 +91,13 @@ async function ldmodel(model){
 	//console.log("predict");
 }
 
-async function adjust(aux,dataset_size,epochs_no,error_max,model){
-	data=generate_data(dataset_size,6/100,47/100,47/100);//data set for training
+function adjust(aux,dataset_size,epochs_no,error_max,model){
+	data=generate_data(dataset_size,30/100,35/100,35/100);//data set for training
 	//console.log(data);
 	const xs=tf.tensor2d(data.inp,[data.inp.length,10]);
 	//console.log(dataset_size+" "+epochs_no+" "+error_max);
 	const ys=tf.tensor2d(data.out,[data.out.length,2]);
-    model.fit(xs, ys, {epochs: epochs_no,shuffle:true}).then(h => {
+	model.fit(xs, ys, {epochs: epochs_no,shuffle:true}).then(h => {
         //console.log(h.history.loss[0]);
 		document.getElementById("data").innerHTML=/*document.getElementById("data").innerHTML+*/"error:  "+h.history.loss[0]+"  error variation: "+(aux-h.history.loss[0])+"<br>";
 		aux=h.history.loss[0];
@@ -114,9 +114,9 @@ function train(){
 	model.add(tf.layers.dense({units: 10, inputShape: [10]}));
 	model.add(tf.layers.dense({units: 10}));
 	model.add(tf.layers.dense({units: 8}));
-	model.add(tf.layers.dense({units: 2}));
+	model.add(tf.layers.dense({activation:'sigmoid',units: 2}));
 	// Prepare the model for training: Specify the loss and the optimizer.
-	model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
+	model.compile({loss: tf.losses.meanSquaredError, optimizer: tf.train.sgd(0.05)});
 
 	var error=document.getElementById("error").value;
 	var epochs=document.getElementById("epochs").value;
