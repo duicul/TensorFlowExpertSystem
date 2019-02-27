@@ -1,10 +1,13 @@
 var resolution=30;
 
-function datasetinputs(dataset)
-{return dataset.map(function extrinp(el){return el.inp});}
 
-function datasetoutputs(dataset)
-{return dataset.map(function extrout(el){return el.outp});}
+function createpoint(){
+	var r1=Math.random()*255;//rgb color
+	var g1=Math.random()*255;
+    var b1=Math.random()*255;
+	var p1=Math.random()*resolution//number of petals
+	return {r:r1,g:g1,b:b1,p:p1}}
+	  
 
 function generate_data(max,x,y,z){ //x,y,z -> proportion for each category
 	adjust_points=[];
@@ -41,6 +44,22 @@ function generate_data(max,x,y,z){ //x,y,z -> proportion for each category
 		return {inp:adjust_points,out:adjust_output,points:actual_val};
 	}
 
+
+function showcases(no,model){
+	//console.log("showcases");
+	var data=generate_data(no,1/3,1/3,1/3);
+	//console.log(data);
+	var inputs=data.inp;
+	var outputs=data.out;
+	var po=data.points;
+	for(var i=0;i<no;i++){
+		console.log(po[i]);
+		console.log(outputs[i]);
+		var output = model.predict(tf.tensor2d(inputs[i],[1,10]));
+		//console.log(model.predict(tf.tensor2d(inputs[i],[1,10])));
+		console.log(output.dataSync());
+	}
+}
 
 async function finishtraining(model){
 	//console.log("finish");
