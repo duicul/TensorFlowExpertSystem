@@ -50,7 +50,8 @@ function train(){
 async function predict_out(){
 	var inp=[]
 	for(var i=1;i<=20;i++)
-	{aux=document.getElementById("inp"+i).checked;
+	{//aux=document.getElementById("inp"+i).checked;
+	aux=$("#inp"+i).prop('checked');
 	//console.log(i+" "+aux);	
      inp.push(aux);}
 	 inp=inp.map(function binary(x) {if(x)return 1; return 0;});
@@ -60,6 +61,15 @@ async function predict_out(){
 	outpercent=out1.dataSync();
 	dataout="";
 	for(var x=0;x<outpercent.length;x++)
-	  	dataout+="Output "+x+" <progress value=\""+outpercent[x]*100+"\" max=\"100\"></progress><br><br>";
+	{stat=outpercent[x]*100;
+		if(stat<=33&&stat>=0)
+			backstat="bg-success";
+		else if(stat>33&&stat<=66)
+			backstat="bg-warning";
+		else if(stat>66&&stat<=100)
+			backstat="bg-danger";
+		else stat="";
+	dataout+="Output "+x+"<div class=\"progress\"><div class=\"progress-bar "+backstat+"\" role=\"progressbar\" style=\"width: "+stat+"%\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div></div>";
+	}
 	document.getElementById("out").innerHTML=dataout;
 }
