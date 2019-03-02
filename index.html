@@ -4,9 +4,13 @@
 <html>
   <head>
 	<title>Neural Network</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"> </script>
+    <script src="tf.min.js"> </script>
 	<script src="tensor.js"> </script>
 	<script src="datasets.js"> </script>
+	<link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.min.js"></script>
+	<script src="jquery-3.3.1.slim.min.js"></script>
+    <script src="popper.min.js"></script>
 
   </head>
 
@@ -14,12 +18,36 @@
   <button onclick="train()">Train</button> <br>
   Error: <input type="text" id="error"/> <br>
   Epochs: <input type="text" id="epochs"/> <br>
-  Dataset size: <input type="text" id="datasetsize"/> <br>
   <p id="data">text<br></p>
-  Red: <input type="text" id="red"/> <br>
-  Green: <input type="text" id="green"/> <br>
-  Blue: <input type="text" id="blue"/> <br>
-  Petals: <input type="text" id="petals"/> <br>
+  <div class="row">
+  <div class="col" align="center">
+  Input1: <input type="checkbox" id="inp1"/> <br>
+  Input2: <input type="checkbox" id="inp2"/> <br>
+  Input3: <input type="checkbox" id="inp3"/> <br>
+  Input4: <input type="checkbox" id="inp4"/> <br>
+  Input5: <input type="checkbox" id="inp5"/> <br>
+  </div>
+  <div class="col" align="center">
+  Input6: <input type="checkbox" id="inp6"/> <br>
+  Input7: <input type="checkbox" id="inp7"/> <br>
+  Input8: <input type="checkbox" id="inp8"/> <br>
+  Input9: <input type="checkbox" id="inp9"/> <br>
+  Input10: <input type="checkbox" id="inp10"/> <br></td>
+  </div>
+  <div class="col" align="center">
+  Input11: <input type="checkbox" id="inp11"/> <br>
+  Input12: <input type="checkbox" id="inp12"/> <br>
+  Input13: <input type="checkbox" id="inp13"/> <br>
+  Input14: <input type="checkbox" id="inp14"/> <br>
+  Input15: <input type="checkbox" id="inp15"/> <br>
+  </div>
+  <div class="col" align="center">
+  Input16: <input type="checkbox" id="inp16"/> <br>
+  Input17: <input type="checkbox" id="inp17"/> <br>
+  Input18: <input type="checkbox" id="inp18"/> <br>
+  Input19: <input type="checkbox" id="inp19"/> <br>
+  Input20: <input type="checkbox" id="inp20"/> <br>
+  </div></div>
   <button onclick="predict_out()">Calculate</button> <br>
   <p id="out">text<br></p>
   </body>
