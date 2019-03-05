@@ -60,6 +60,7 @@ async function predict_out(){
 	var out1=mod.predict(tf.tensor2d(inp,[1,20]));
 	outpercent=out1.dataSync();
 	dataout="";
+	out_name=["Gravitate problema","Placute/Tamburi frana","Output 3","Output 4","Output 5"];
 	for(var x=0;x<outpercent.length;x++)
 	{stat=outpercent[x]*100;
 		if(stat<=33&&stat>=0)
@@ -69,7 +70,7 @@ async function predict_out(){
 		else if(stat>66&&stat<=100)
 			backstat="bg-danger";
 		else stat="";
-	dataout+="Output "+x+"<div class=\"progress\"><div class=\"progress-bar "+backstat+"\" role=\"progressbar\" style=\"width: "+stat+"%\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div></div>";
+	dataout+=out_name[x]+" <div class=\"progress\"><div class=\"progress-bar "+backstat+"\" role=\"progressbar\" style=\"width: "+stat+"%\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div></div>";
 	}
 	document.getElementById("out").innerHTML=dataout;
 }

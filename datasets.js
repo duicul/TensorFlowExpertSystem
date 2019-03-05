@@ -1,7 +1,24 @@
+//Inputs
+//0-Bataie viraj acceleratie
+//1-Bataie denivelare mica
+//2-Bataie gropi
+//3-Uruit viteza >50km/h
 
+//4-Scartait franare usoara
+//5-Bataie volan la franare
+//6-Bataie pedala frana la franare
+//7-Scartait metalic puternic la franare-0.9
+//8-Bataie volan accelerare v>90km/h-0.3
+//9-Bataie volan accelerare v>50km/h-0.9
+//
 
-
-var data=[{inp:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],outp:[0,0,0,0,0]},
+//Outputs
+//0-Gravitate problema
+//1-Placute/Tamburi frana
+//3-
+var data=[{inp:[0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],outp:[0,0,0,0,0]},
+		  {inp:[0,0,0,0, 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],outp:[0.2,1,0,0,0]},
+		  {inp:[0,0,0,0, 0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],outp:[0.9,1,0,0,0]},
 		  {inp:[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],outp:[1,1,1,1,1]}/*,
 		  
           {inp:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],outp:[0,0,0,0,0]},
