@@ -1,5 +1,6 @@
 var resolution=30;
-
+var out_name=["Severity","Motherboard","CPU","Video Card","Ram cards","HDD","OS","Drivers","BIOS","Clean Up","PSU"];
+var inp_name=["Pc is slow","No image Computer starts no beep","No image Computer starts beeps","No image Computer does not starts","PC wont boot","Bars on screen","Fans speed up","Usb not recognised","Computer keeps restartng","Peripherals aren't working  properly","Commands not working","Internet slow","Computer freezes","PC blue screen of death","Corrupt files or long delays accessing files","Sudden shut off…or sudden anything weird","Unusual noises","Clicking sound"];
 function datasetinputs(dataset)
 {return dataset.map(function extrinp(el){return el.inp});}
 
@@ -9,9 +10,9 @@ function datasetoutputs(dataset)
 function adjust(aux,epochs_no,error_max,model){
 	datasetin=datasetinputs(data)
 	datasetout=datasetoutputs(data)
-	const xs=tf.tensor2d(datasetin,[datasetin.length,20]);
+	const xs=tf.tensor2d(datasetin,[datasetin.length,inp_name.length]);
 	//console.log(dataset_size+" "+epochs_no+" "+error_max);
-	const ys=tf.tensor2d(datasetout,[datasetout.length,5]);
+	const ys=tf.tensor2d(datasetout,[datasetout.length,out_name.length]);
 	model.fit(xs, ys, {epochs: epochs_no,shuffle:true}).then(h => {
 		document.getElementById("data").innerHTML="error:  "+h.history.loss[0]+"  error variation: "+(aux-h.history.loss[0])+"<br>";
 		aux=h.history.loss[0];
@@ -31,10 +32,10 @@ async function finishtraining(model){
 
 function train(){
 	const model = tf.sequential();
-	model.add(tf.layers.dense({units: 30, inputShape: [20]}));
+	model.add(tf.layers.dense({units: 30, inputShape: [inp_name.length]}));
 	model.add(tf.layers.dense({units: 10}));
 	model.add(tf.layers.dense({units: 8}));
-	model.add(tf.layers.dense({activation:'sigmoid',units: 5}));
+	model.add(tf.layers.dense({activation:'sigmoid',units: out_name.length}));
 	// Prepare the model for training: Specify the loss and the optimizer.
 	model.compile({loss: tf.losses.meanSquaredError, optimizer: tf.train.sgd(0.05)});
 
@@ -47,20 +48,25 @@ function train(){
 	else alert("Wrong settings");
 }
 
+function addoptions()
+{aux="<div class=\"row\">"+inp_name[0]+": <input type=\"checkbox\" id=\"in"+0+"\"/> </div>";
+aux+="<div class=\"row\"><form> Computer starts without image: NoBeeps <input type=\"radio\" name=\"beep\" id=\"in1\">Beeps<input type=\"radio\" name=\"beep\" id=\"in2\">No<input type=\"radio\" name=\"beep\"></form></div>";
+	for(var i=3;i<inp_name.length;i++)
+		aux+="<div class=\"row\">"+inp_name[i]+": <input type=\"checkbox\" id=\"in"+i+"\"/> </div>";
+$("#options").html(aux);
+}
+
 async function predict_out(){
 	var inp=[]
-	for(var i=1;i<=20;i++)
-	{//aux=document.getElementById("inp"+i).checked;
-	aux=$("#inp"+i).prop('checked');
-	//console.log(i+" "+aux);	
+	for(var i=0;i<inp_name.length;i++)
+	{aux=$("#in"+i).prop('checked');	
      inp.push(aux);}
 	 inp=inp.map(function binary(x) {if(x)return 1; return 0;});
 	 console.log(inp);
 	var mod = await tf.loadModel('localstorage://my-model-1');
-	var out1=mod.predict(tf.tensor2d(inp,[1,20]));
+	var out1=mod.predict(tf.tensor2d(inp,[1,inp.length]));
 	outpercent=out1.dataSync();
 	dataout="";
-	out_name=["Gravitate problema","Placute/Tamburi frana","Output 3","Output 4","Output 5"];
 	for(var x=0;x<outpercent.length;x++)
 	{stat=outpercent[x]*100;
 		if(stat<=33&&stat>=0)

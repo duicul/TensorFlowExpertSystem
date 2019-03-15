@@ -1,0 +1,107 @@
+  <div class="row">
+  <div class="col">
+  <div id="accordion">
+ 
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Collapsible Group Item #1  </button></h5></div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        Input1: <input type="checkbox" id="inp1"/> <br>
+		Input2: <input type="checkbox" id="inp2"/> <br>
+		Input3: <input type="checkbox" id="inp3"/> <br>
+		Input4: <input type="checkbox" id="inp4"/> <br>
+		Input5: <input type="checkbox" id="inp5"/>      
+		</div></div></div>
+		
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2</button></h5></div>
+		  
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        Input6: <input type="checkbox" id="inp6"/> <br>
+		Input7: <input type="checkbox" id="inp7"/> <br>
+		Input8: <input type="checkbox" id="inp8"/> <br>
+		Input9: <input type="checkbox" id="inp9"/> <br>
+		Input10: <input type="checkbox" id="inp10"/>
+	</div></div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Collapsible Group Item #3</button></h5></div>
+    
+	<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        Input11: <input type="checkbox" id="inp11"/> <br>
+		Input12: <input type="checkbox" id="inp12"/> <br>
+		Input13: <input type="checkbox" id="inp13"/> <br>
+		Input14: <input type="checkbox" id="inp14"/> <br>
+		Input15: <input type="checkbox" id="inp15"/>
+  </div></div>
+	</div>
+  </div></div> 
+  <div class="col">
+  <div id="accordion1">
+  
+  <div class="card">
+    <div class="card-header" id="headingFour">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Collapsible Group Item #4
+        </button>
+      </h5>
+    </div>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion1">
+      <div class="card-body">
+        Input16: <input type="checkbox" id="inp16"/> <br>
+		Input17: <input type="checkbox" id="inp17"/> <br>
+		Input18: <input type="checkbox" id="inp18"/> <br>
+		Input19: <input type="checkbox" id="inp19"/> <br>
+		Input20: <input type="checkbox" id="inp20"/>
+  </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header" id="headingFive">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Collapsible Group Item #5</button></h5></div>
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion1">
+      <div class="card-body">
+		Input21: <input type="checkbox" id="inp21"/> <br>
+		Input22: <input type="checkbox" id="inp22"/> <br>
+		Input23: <input type="checkbox" id="inp23"/> <br>
+		Input24: <input type="checkbox" id="inp24"/> <br>
+		Input25: <input type="checkbox" id="inp25"/>
+	</div></div></div>
+	
+	<div class="card">
+    <div class="card-header" id="headingSix">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+          Collapsible Group Item #6</button></h5></div>
+    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion1">
+      <div class="card-body">
+		Input26: <input type="checkbox" id="inp26"/> <br>
+		Input27: <input type="checkbox" id="inp27"/> <br>
+		Input28: <input type="checkbox" id="inp28"/> <br>
+		Input29: <input type="checkbox" id="inp29"/> <br>
+		Input30: <input type="checkbox" id="inp30"/>
+	</div></div></div>
+	
+  </div>
+</div>
+  <div class="col" align="center">
+
+  </div>
+  </div>
