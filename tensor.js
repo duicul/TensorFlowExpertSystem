@@ -37,7 +37,7 @@ function train(){
 	model.add(tf.layers.dense({units: 8}));
 	model.add(tf.layers.dense({activation:'sigmoid',units: out_name.length}));
 	// Prepare the model for training: Specify the loss and the optimizer.
-	model.compile({loss: tf.losses.meanSquaredError, optimizer: tf.train.sgd(0.05)});
+	model.compile({loss: tf.losses.meanSquaredError, optimizer: tf.train.sgd(0.1)});
 
 	var error=document.getElementById("error").value;
 	var epochs=document.getElementById("epochs").value;
