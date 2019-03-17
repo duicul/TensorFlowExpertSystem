@@ -31,9 +31,9 @@ async function finishtraining(model){
 
 function train(){
 	const model = tf.sequential();
-	model.add(tf.layers.dense({units: 40,activation:'sigmoid', inputShape: [inp_name.length]}));
+	model.add(tf.layers.dense({units: 40, inputShape: [inp_name.length]}));
 	//model.add(tf.layers.dense({units: 40}));
-	//model.add(tf.layers.dense({units: 10}));
+	model.add(tf.layers.dense({units: 20}));
 	model.add(tf.layers.dense({activation:'sigmoid',units: out_name.length}));
 	// Prepare the model for training: Specify the loss and the optimizer.
 	model.compile({loss: tf.losses.meanSquaredError, optimizer: tf.train.sgd(0.1)});
@@ -52,8 +52,8 @@ function addoptions()
 aux+="<div class=\"row\"><form> \
         <div class=\"row\"><div class=\"col\">Image Okay  <input type=\"radio\" name=\"beep\"> </div></div>\
 		<div class=\"row\">\
-		<div class=\"col\">No image:</div><div class=\"col\">Computer starts </div><div class=\"col\">Beeps <input type=\"radio\" name=\"beep\" id=\"in1\"> </div> </div> \
-<div class=\"row\"><div class=\"col\"></div><div class=\"col\"></div>             <div class=\"col\">NoBeeps <input type=\"radio\" name=\"beep\" id=\"in2\"></div></div> \
+		<div class=\"col\">No image:</div><div class=\"col\">Computer starts </div><div class=\"col\">NoBeeps <input type=\"radio\" name=\"beep\" id=\"in1\"> </div> </div> \
+<div class=\"row\"><div class=\"col\"></div><div class=\"col\"></div>             <div class=\"col\">Beeps <input type=\"radio\" name=\"beep\" id=\"in2\"></div></div> \
 <div class=\"row\"><div class=\"col\"></div><div class=\"col\">Computer does not start  <input type=\"radio\" name=\"beep\" id=\"in3\"></div><div class=\"col\"></div></div>\
 		</form></div>";
 	for(var i=4;i<inp_name.length;i++)
@@ -67,6 +67,11 @@ async function predict_out(){
 	{aux=$("#in"+i).prop('checked');	
      inp.push(aux);}
 	 inp=inp.map(function binary(x) {if(x)return 1; return 0;});
+	 true_inp=inp.filter(function onval(x) {return x==1;});
+	 //console.log(true_inp);
+	 if(true_inp.length==0)
+	 {alert("Select an option");
+	 return;}
 	 console.log(inp);
 	var mod = await tf.loadModel('localstorage://my-model-1');
 	var out1=mod.predict(tf.tensor2d(inp,[1,inp.length]));
@@ -81,7 +86,7 @@ async function predict_out(){
 		else if(stat>65&&stat<=100)
 			backstat="bg-danger";
 		else stat="";
-	if(stat>=0&&x!=0||x==0)
+	if(stat>=25&&x!=0||x==0)
 	dataout+=out_name[x]+" <div class=\"progress\"><div class=\"progress-bar "+backstat+"\" role=\"progressbar\" style=\"width: "+stat+"%\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div></div>";
 	}
 	document.getElementById("out").innerHTML=dataout;
