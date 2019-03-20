@@ -48,7 +48,7 @@ function train(){
 }
 
 function addoptions()
-{aux="<div class=\"row\">"+inp_name[0]+": <input type=\"checkbox\" id=\"in"+0+"\"/> </div>";
+{aux="<div class=\"row\"><div class=\"col>\">"+inp_name[0]+"</div><div class=\"col>\"> <input type=\"checkbox\" id=\"in"+0+"\"/></div> </div>";
 aux+="<div class=\"row\"><form> \
         <div class=\"row\"><div class=\"col\">Image Okay  <input type=\"radio\" name=\"beep\"> </div></div>\
 		<div class=\"row\">\
@@ -57,7 +57,7 @@ aux+="<div class=\"row\"><form> \
 <div class=\"row\"><div class=\"col\"></div><div class=\"col\">Computer does not start  <input type=\"radio\" name=\"beep\" id=\"in3\"></div><div class=\"col\"></div></div>\
 		</form></div>";
 	for(var i=4;i<inp_name.length;i++)
-		aux+="<div class=\"row\">"+inp_name[i]+": <input type=\"checkbox\" id=\"in"+i+"\"/> </div>";
+		aux+="<div class=\"row\"><div class=\"col>\">"+inp_name[i]+"</div><div class=\"col>\">  <input type=\"checkbox\" id=\"in"+i+"\"/> </div></div>";
 $("#options").html(aux);
 }
 
