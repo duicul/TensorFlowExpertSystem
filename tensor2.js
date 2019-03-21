@@ -17,15 +17,13 @@ for(i=0;i<inputname.length;i++)
 {//console.log(inputname[i]+" "+i);
 inpval[i]=inputsample.includes(inputname[i])?1:0;
 }
-return inpval;
-		}
+return inpval;}
 
 function mapoutput(outputsample)
 {outval=new Array(outputname.length);
 for(i=0;i<outputname.length;i++)
 {outval[i]=outputsample.includes(outputname[i])?1:0;}
-return outval;
-		}
+return outval;}
 		
 
 function extractinputs()
@@ -100,6 +98,26 @@ function addoptions()
 $("#options").html(aux);
 }
 
+
+function search()
+{searchterm=$("#search").val();
+srccomp=searchterm.split(/ +/)
+//console.log(srccomp+" "+searchterm+" ");	
+inpindex=Array(inputname.length)
+for(i=0;i<inputname.length;i++)
+{aux_cont=0	
+	for(j=0;j<srccomp.length;j++)
+	{aux_cont=inputname[i].toLowerCase().includes(srccomp[j].toLowerCase())?aux_cont+1:aux_cont;
+	//console.log(inputname[i].toLowerCase()+" "+srccomp[j].toLowerCase())
+	}
+ inpindex[i]=aux_cont>inputname[i].split(/ +/).length/4?1:0;
+}
+search_predict_out(inpindex);}
+
+
+
+
+
 async function predict_out(){
 	var inp=[];
 	for(var i=0;i<inputname.length;i++)
@@ -131,10 +149,28 @@ async function predict_out(){
 	document.getElementById("out").innerHTML=dataout;
 }
 
-/*function compare(a,b) {
-  if (a.last_nom < b.last_nom)
-    return -1;
-  if (a.last_nom > b.last_nom)
-    return 1;
-  return 0;
-}*/
+
+async function search_predict_out(inp){
+	 console.log(inp);
+	var mod = await tf.loadModel('localstorage://my-model-1');
+	var out1=mod.predict(tf.tensor2d(inp,[1,inputname.length]));
+	outpercent=out1.dataSync();
+	dataout="";
+	zero_inputs=inp.filter(function(x){return x==0})
+	if(zero_inputs.length==inp.length)
+	{alert("No relevant match found");
+	return;}
+	for(var x=0;x<outpercent.length;x++)
+	{stat=outpercent[x]*100;
+		if(stat<=40&&stat>=0)
+			backstat="bg-success";
+		else if(stat>40&&stat<=65)
+			backstat="bg-warning";
+		else if(stat>65&&stat<=100)
+			backstat="bg-danger";
+		else stat="";
+	if(stat>=25&&x!=0||x==0)
+	dataout+=outputname[x]+" <div class=\"progress\"><div class=\"progress-bar "+backstat+"\" role=\"progressbar\" style=\"width: "+stat+"%\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div></div>";
+	}
+	document.getElementById("out").innerHTML=dataout;
+}
