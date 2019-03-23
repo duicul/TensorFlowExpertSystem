@@ -1,23 +1,26 @@
 var out_name=["Severity","Motherboard","CPU","Video Card","Ram cards","HDD","OS","Drivers","BIOS","Clean Up","PSU"];
 var inp_name=["Pc is slow","No image Computer starts no beep","No image Computer starts beeps","No image Computer does not starts","PC wont boot","Bars on screen","Fans speed up","Usb not recognised","Computer keeps restartng","Peripherals aren't working  properly","Commands not working","Internet slow","Computer freezes","PC blue screen of death","Corrupt files or long delays accessing files","Sudden shut off…or sudden anything weird","Unusual noises","Clicking sound"];
+var training_steps=[];
+var training_variation=[];
 function datasetinputs(dataset)
 {return dataset.map(function extrinp(el){return el.inp});}
 
 function datasetoutputs(dataset)
 {return dataset.map(function extrout(el){return el.outp});}
 
-function adjust(aux,epochs_no,error_max,model){
-	datasetin=datasetinputs(data)
-	datasetout=datasetoutputs(data)
-	const xs=tf.tensor2d(datasetin,[datasetin.length,inp_name.length]);
-	//console.log(dataset_size+" "+epochs_no+" "+error_max);
-	const ys=tf.tensor2d(datasetout,[datasetout.length,out_name.length]);
+function adjust(aux,epochs_no,error_max,model,xs,ys,step){
+	
 	model.fit(xs, ys, {epochs: epochs_no,shuffle:true}).then(h => {
 		document.getElementById("data").innerHTML="error:  "+h.history.loss[0]+"  error variation: "+(aux-h.history.loss[0])+"<br>";
+		var vari=aux-h.history.loss[0];
+		if(aux!=0)
+		{training_variation.push({y:vari});}
 		aux=h.history.loss[0];
 		console.log("maxerr"+error_max+"acterr "+aux);
-        if(h.history.loss[0]>error_max)
-			adjust(h.history.loss[0],epochs_no,error_max,model);
+		training_steps.push({y:aux});
+	
+		if(h.history.loss[0]>error_max)
+			adjust(h.history.loss[0],epochs_no,error_max,model,xs,ys,step+1);
 		else{ finishtraining(model);			
 		}
 	});
@@ -27,6 +30,39 @@ async function finishtraining(model){
 	//console.log("finish");
 	alert("finished training");
 	var savedmod=await model.save('localstorage://my-model-1');
+	
+	var chart = new CanvasJS.Chart("trainingSteps", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "ErrorOnSteps"
+	},
+	axisY:{
+		includeZero: true
+	},
+	data: [{        
+		type: "line",       
+		dataPoints: training_steps
+	}]
+});
+chart.render();
+
+	var chart1 = new CanvasJS.Chart("trainingVariation", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "ErrorVariation"
+	},
+	axisY:{
+		includeZero: true
+	},
+	data: [{        
+		type: "line",       
+		dataPoints: training_variation
+	}]
+});
+chart1.render();
+
 }
 
 function train(){
@@ -41,9 +77,14 @@ function train(){
 	var error=document.getElementById("error").value;
 	var epochs=document.getElementById("epochs").value;
 	console.log(error+" "+epochs);
-	if(error>=0&&error<=0.7&&	epochs>=1)
-		//adjust(0,3000,1,0.03,model);
-		adjust(0,epochs,error,model);
+	if(error>=0&&error<=0.7&&epochs>=1)
+	{datasetin=datasetinputs(data)
+	datasetout=datasetoutputs(data)
+	const xs=tf.tensor2d(datasetin,[datasetin.length,inp_name.length]);
+	const ys=tf.tensor2d(datasetout,[datasetout.length,out_name.length]);
+	training_steps=[];
+	training_variation=[];
+	adjust(0,epochs,error,model,xs,ys,0);}
 	else alert("Wrong settings");
 }
 

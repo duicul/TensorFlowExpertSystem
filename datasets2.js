@@ -35,7 +35,9 @@ Outputs
 var data=[{inp:["Computer freezes"],outp:["Ram cards"]},
 		  {inp:["Unusual noises"],outp:["HDD"]},
 		  {inp:["PC blue screen of death"],outp:["Ram cards"]},
-		  {inp:["Ma doare in cot"],outp:["Racit"]},
+		  {inp:["Corrupt files or long delays accessing files"],outp:["HDD"]},
+		  {inp:["Usb not recognised"],outp:["Motherboard"]},
+		  {inp:["Usb not recognised"],outp:["Drivers"]},
 
 
 ];
